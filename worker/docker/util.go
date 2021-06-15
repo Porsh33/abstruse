@@ -13,6 +13,14 @@ func genExitMessage(code int) string {
 	return aurora.Bold(aurora.Red(fmt.Sprintf("\nExit code: %d", code))).String()
 }
 
+func green(str string) string {
+	return aurora.Bold(aurora.Green(str)).String()
+}
+
 func yellow(str string) string {
 	return aurora.Bold(aurora.Yellow(str)).String()
+}
+
+func red(str string) string {
+	return aurora.Bold(aurora.Red(str)).String()
 }
