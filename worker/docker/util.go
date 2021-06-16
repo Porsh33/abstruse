@@ -8,9 +8,9 @@ import (
 
 func genExitMessage(code int) string {
 	if code == 0 {
-		return aurora.Bold(aurora.Green(fmt.Sprintf("\nExit code: %d", code))).String()
+		return green(fmt.Sprintf("\nExit code: %d", code))
 	}
-	return aurora.Bold(aurora.Red(fmt.Sprintf("\nExit code: %d", code))).String()
+	return red(fmt.Sprintf("\nExit code: %d", code))
 }
 
 func green(str string) string {
