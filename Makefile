@@ -52,6 +52,9 @@ dev:
 dev_worker:
 	@reflex -sr '\.go$$' -R '^web/' -R '^server/' -R '^configs/' -R '^tests/' -- sh -c 'make worker && ./build/abstruse-worker --logger-level debug'
 
+dev_ui:
+	@cd web/abstruse && yarn start
+
 protoc:
 	@protoc ./pb/api.proto --go-grpc_out=. --go-grpc_opt=paths=source_relative --go_out=. --go_opt=paths=source_relative
 
