@@ -170,18 +170,6 @@ func (c *ConfigParser) ShouldBuild() bool {
 		return true
 	}
 
-	if len(c.Parsed.Branches.Ignore) > 0 {
-		for _, ignore := range c.Parsed.Branches.Ignore {
-			r, err := regexp.Compile(ignore)
-			if err != nil {
-				continue
-			}
-			if r.MatchString(c.Branch) {
-				return false
-			}
-		}
-	}
-
 	if len(c.Parsed.Branches.Test) > 0 {
 		for _, test := range c.Parsed.Branches.Test {
 			r, err := regexp.Compile(test)
@@ -190,6 +178,18 @@ func (c *ConfigParser) ShouldBuild() bool {
 			}
 			if r.MatchString(c.Branch) {
 				return true
+			}
+		}
+	}
+
+	if len(c.Parsed.Branches.Ignore) > 0 {
+		for _, ignore := range c.Parsed.Branches.Ignore {
+			r, err := regexp.Compile(ignore)
+			if err != nil {
+				continue
+			}
+			if r.MatchString(c.Branch) {
+				return false
 			}
 		}
 	}
