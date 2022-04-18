@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/drone/go-scm/scm"
 	"github.com/drone/go-scm/scm/driver/bitbucket"
@@ -52,8 +53,12 @@ func New(ctx context.Context, provider, url, token string) (SCM, error) {
 		return scm, fmt.Errorf("unknown scm provider")
 	}
 
+	auth := &transport.Authorization{Scheme: "Bearer", Credentials: scm.token}
+	if strings.HasPrefix(scm.token, "AQAD-") {
+		auth.Scheme = "OAuth"
+	}
 	scm.client.Client = &http.Client{
-		Transport: &transport.BearerToken{Token: scm.token},
+		Transport: auth,
 	}
 
 	return scm, err
