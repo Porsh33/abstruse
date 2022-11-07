@@ -56,10 +56,11 @@ func (s jobStore) Update(job *core.Job) error {
 		job.Log = job.Log[0:16777215]
 	}
 	err := s.db.Model(job).Updates(map[string]interface{}{
-		"status":     job.Status,
-		"start_time": job.StartTime,
-		"end_time":   job.EndTime,
-		"log":        job.Log,
+		"status":         job.Status,
+		"start_time":     job.StartTime,
+		"end_time":       job.EndTime,
+		"log":            job.Log,
+		"assignedWorker": job.AssignedWorker,
 	}).Error
 
 	if err == nil {
