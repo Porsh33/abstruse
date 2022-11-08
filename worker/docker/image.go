@@ -8,6 +8,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"io"
+  "io/ioutil"
 	"path"
 	"strings"
 
@@ -76,7 +77,7 @@ func PushImage(tag string) (io.ReadCloser, error) {
 	}
 	tag = prependTag(tag)
 
-	authConfig := registry.AuthConfig{Username: cfg.Username, Password: cfg.Password}
+	authConfig := types.AuthConfig{Username: cfg.registry.Username, Password: cfg.registry.Password}
 	authJSON, _ := json.Marshal(authConfig)
 	auth := base64.URLEncoding.EncodeToString(authJSON)
 
@@ -93,8 +94,8 @@ func PullImage(image string, config *config.Registry) error {
 
 	opts := types.ImagePullOptions{}
 
-	if cfg.Username != "" && cfg.Password != "" {
-		authConfig := registry.AuthConfig{Username: cfg.Username, Password: cfg.Password}
+	if cfg.registry.Username != "" && cfg.registry.Password != "" {
+		authConfig := types.AuthConfig{Username: cfg.registry.Username, Password: cfg.registry.Password}
 		authJSON, _ := json.Marshal(authConfig)
 		opts.RegistryAuth = base64.URLEncoding.EncodeToString(authJSON)
 	}
@@ -105,7 +106,7 @@ func PullImage(image string, config *config.Registry) error {
 	}
 
 	defer out.Close()
-	if _, rerr := io.ReadAll(out); rerr != nil {
+	if _, rerr := ioutil.ReadAll(out); rerr != nil {
 		return rerr
 	}
 	return nil
@@ -148,8 +149,8 @@ func configureTags(tags []string) []string {
 }
 
 func prependTag(tag string) string {
-	if !strings.HasPrefix(tag, cfg.Addr) {
-		tag = path.Clean(path.Join(cfg.Addr, tag))
+	if !strings.HasPrefix(tag, cfg.registry.Addr) {
+		tag = path.Clean(path.Join(cfg.registry.Addr, tag))
 	}
 	return tag
 }
