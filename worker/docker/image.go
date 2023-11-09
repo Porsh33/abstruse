@@ -8,13 +8,12 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"io"
-  "io/ioutil"
+	"io/ioutil"
 	"path"
 	"strings"
 
 	"github.com/bleenco/abstruse/worker/config"
 	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/registry"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/jsonmessage"
 )

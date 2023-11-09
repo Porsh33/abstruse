@@ -118,7 +118,7 @@ func (s providerStore) findRepos(id uint, page, size int) ([]*scm.Repository, er
 
 	// Some providers like Stash don't return perms in ListRepos response
 	for _, repo := range repos {
-		if repo.Perm == nil {
+		if repo.Perm == nil || (repo.Perm.Push == false && repo.Perm.Admin == false) {
 			repo.Perm, err = gitscm.FindPerms(repo)
 			if err != nil {
 				repo.Perm = &scm.Perm{}
