@@ -281,7 +281,7 @@ func (s repositoryStore) SetMisc(id uint, useSSH bool) error {
 		return fmt.Errorf("repository not found")
 	}
 
-	return s.db.Model(&repo).Update("useSSH", useSSH).Error
+	return s.db.Model(&repo).Update("use_ssh", useSSH).Error
 }
 
 func (s repositoryStore) UpdateSSHPrivateKey(id uint, key string) error {
